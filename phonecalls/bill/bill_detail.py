@@ -22,11 +22,48 @@ class BillDetail(object):
         self.end_interval_second = self._get_interval_second(
             end_interval_hour)
 
-    def _get_interval_second(self, time_hour):
-        timeobj = time(time_hour, 0)
+    def _get_interval_second(self, hour, minutes=0, seconds=0):
+        timeobj = time(hour, minutes, seconds)
         seconds = datetime.combine(date.min, timeobj) - datetime.min
         seconds = seconds.total_seconds()
         return seconds
 
     def _get_total_days(self):
         return self.total_time.days
+
+    def _get_total_seconds_charging_day(self):
+        return self.end_interval_second - self.start_interval_second
+
+    def calculate_bill_charging_time(self):
+        start_time_seconds = self._get_interval_second(
+            self.start_datetime.hour, self.start_datetime.minute,
+            self.start_datetime.second)
+        end_time_seconds = self._get_interval_second(
+            self.end_datetime.hour, self.end_datetime.minute,
+            self.end_datetime.second)
+
+        if (start_time_seconds <= self.start_interval_second and
+                end_time_seconds >= self.end_interval_second):
+            second_start = self.start_interval_second
+            second_end = self.end_interval_second
+
+        if (start_time_seconds >= self.start_interval_second and
+                end_time_seconds >= self.end_interval_second):
+            second_start = start_time_seconds
+            second_end = self.end_interval_second
+
+        if (start_time_seconds <= self.start_interval_second and
+                end_time_seconds <= self.end_interval_second):
+            second_start = self.start_interval_second
+            second_end = end_time_seconds
+
+        if (start_time_seconds >= self.start_interval_second and
+                end_time_seconds <= self.end_interval_second):
+            second_start = start_time_seconds
+            second_end = end_time_seconds
+
+        total = second_end - second_start
+        total += self._get_total_days() * (
+            self.end_interval_second - self.start_interval_second)
+
+        return total
