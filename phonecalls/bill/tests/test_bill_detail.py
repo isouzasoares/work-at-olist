@@ -1,3 +1,4 @@
+from decimal import Decimal
 from datetime import datetime
 
 from django.test import SimpleTestCase
@@ -119,3 +120,41 @@ class BillDetailTestCase(SimpleTestCase):
         after = datetime(2017, 5, 23, 7, 00, 30)
         detail = BillDetail(now, after)
         self.assertEqual(detail.get_total_time_call(), "0h00m30s")
+
+    def test_get_total_price_call(self):
+        now = datetime(2017, 5, 23, 10, 00, 00)
+        after = datetime(2017, 5, 23, 20, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_price_call(), Decimal('54.36'))
+
+        now = datetime(2017, 5, 23, 4, 00, 00)
+        after = datetime(2017, 5, 23, 5, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_price_call(), Decimal('0.36'))
+
+        now = datetime(2017, 5, 23, 23, 00, 00)
+        after = datetime(2017, 5, 23, 23, 10, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_price_call(), Decimal('0.36'))
+
+        now = datetime(2017, 5, 23, 6, 00, 00)
+        after = datetime(2017, 5, 23, 6, 00, 50)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_price_call(), Decimal('0.36'))
+
+        now = datetime(2017, 5, 23, 6, 00, 00)
+        after = datetime(2017, 5, 23, 6, 10, 10)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_price_call(), Decimal('1.26'))
+
+        now = datetime(2017, 5, 23, 7, 00, 00)
+        after = datetime(2017, 5, 24, 7, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_price_call(),
+                         Decimal('86.76'))
+
+        now = datetime(2017, 5, 23, 21, 0, 0)
+        after = datetime(2017, 5, 25, 21, 0, 0)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_price_call(),
+                         Decimal('173.16'))

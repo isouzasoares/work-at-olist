@@ -1,3 +1,4 @@
+from decimal import Decimal
 from datetime import datetime, date, time
 
 
@@ -96,7 +97,7 @@ class BillDetail(object):
                 self.end_datetime.replace(
                     day=self.end_datetime.day - 1).date())
 
-            if self.end_datetime > end_date_day and date_validate:
+            if date_validate:
                 total += self._get_total_days_automatic_calculate() * (
                     self.end_interval_second - self.start_interval_second)
             return total
@@ -111,3 +112,9 @@ class BillDetail(object):
 
     def get_total_time_call(self):
         return self._second_to_hour(self.total_hour)
+
+    def get_total_price_call(self):
+        total = Decimal(str(self.start_value))
+        time_total = self.calculate_bill_charging_time() // 60
+        total += Decimal(str(time_total)) * Decimal(str(self.call_value))
+        return Decimal(str(total)).normalize()
