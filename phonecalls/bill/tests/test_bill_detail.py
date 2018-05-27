@@ -39,17 +39,57 @@ class BillDetailTestCase(SimpleTestCase):
                          79200.0 - 21600.0)
 
     def test_calculate_bill_charging_time(self):
-        now = datetime(2017, 5, 23, 21, 57, 00)
-        after = datetime(2017, 5, 23, 22, 10, 56)
+        now = datetime(2017, 5, 23, 10, 00, 00)
+        after = datetime(2017, 5, 23, 20, 00, 00)
         detail = BillDetail(now, after)
-        self.assertEqual(detail.calculate_bill_charging_time(), 180)
+        self.assertEqual(detail.calculate_bill_charging_time(), 36000)
 
-        now = datetime(2017, 5, 23, 21, 57, 00)
-        after = datetime(2017, 5, 24, 4, 00, 00)
+        now = datetime(2017, 5, 23, 5, 00, 00)
+        after = datetime(2017, 5, 23, 7, 00, 00)
         detail = BillDetail(now, after)
-        self.assertEqual(detail.calculate_bill_charging_time(), 180)
+        self.assertEqual(detail.calculate_bill_charging_time(), 3600)
 
         now = datetime(2017, 5, 23, 21, 00, 00)
-        after = datetime(2017, 5, 25, 10, 00, 00)
+        after = datetime(2017, 5, 23, 23, 00, 00)
         detail = BillDetail(now, after)
-        self.assertEqual(detail.calculate_bill_charging_time(), 75600)
+        self.assertEqual(detail.calculate_bill_charging_time(), 3600)
+
+        now = datetime(2017, 5, 23, 5, 00, 00)
+        after = datetime(2017, 5, 23, 23, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 57600)
+
+        now = datetime(2017, 5, 23, 4, 00, 00)
+        after = datetime(2017, 5, 23, 5, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 0)
+
+        now = datetime(2017, 5, 23, 23, 00, 00)
+        after = datetime(2017, 5, 23, 23, 10, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 0)
+
+        now = datetime(2017, 5, 23, 21, 00, 00)
+        after = datetime(2017, 5, 24, 5, 10, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 3600)
+
+        now = datetime(2017, 5, 23, 21, 00, 00)
+        after = datetime(2017, 5, 25, 7, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 64800)
+
+        now = datetime(2017, 5, 23, 0, 0, 0)
+        after = datetime(2017, 5, 24, 0, 0, 0)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 57600)
+
+        now = datetime(2017, 5, 23, 21, 0, 0)
+        after = datetime(2017, 5, 25, 21, 0, 0)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 115200)
+
+        now = datetime(2017, 5, 23, 21, 0, 0)
+        after = datetime(2017, 5, 27, 21, 0, 0)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 230400)
