@@ -29,7 +29,7 @@ class BillDetailTestCase(SimpleTestCase):
         now = datetime(2017, 5, 23, 21, 0, 0)
         after = datetime(2017, 5, 25, 10, 0, 0)
         detail = BillDetail(now, after)
-        self.assertEqual(detail._get_total_days(), 1)
+        self.assertEqual(detail._get_total_days_automatic_calculate(), 1)
 
     def test_total_seconds_charging_day(self):
         now = datetime(2017, 5, 23, 21, 0, 0)
@@ -93,3 +93,8 @@ class BillDetailTestCase(SimpleTestCase):
         after = datetime(2017, 5, 27, 21, 0, 0)
         detail = BillDetail(now, after)
         self.assertEqual(detail.calculate_bill_charging_time(), 230400)
+
+        now = datetime(2017, 5, 23, 7, 00, 00)
+        after = datetime(2017, 5, 24, 7, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.calculate_bill_charging_time(), 57600)

@@ -28,7 +28,7 @@ class BillDetail(object):
         seconds = seconds.total_seconds()
         return seconds
 
-    def _get_total_days(self):
+    def _get_total_days_automatic_calculate(self):
         total_day = (self.end_datetime - self.start_datetime).days
 
         if total_day > 1:
@@ -76,7 +76,7 @@ class BillDetail(object):
 
     def calculate_bill_charging_time(self):
 
-        if self._get_total_days():
+        if self._get_total_days_automatic_calculate():
             start_date_day = self.start_datetime.replace(
                 day=self.start_datetime.day, hour=23, minute=59, second=59)
 
@@ -91,8 +91,13 @@ class BillDetail(object):
 
             total = second_end + second_start
 
-            if self.end_datetime > end_date_day:
-                total += self._get_total_days() * (
+            date_validate = (
+                self.start_datetime.date() !=
+                self.end_datetime.replace(
+                    day=self.end_datetime.day - 1).date())
+
+            if self.end_datetime > end_date_day and date_validate:
+                total += self._get_total_days_automatic_calculate() * (
                     self.end_interval_second - self.start_interval_second)
             return total
         else:
