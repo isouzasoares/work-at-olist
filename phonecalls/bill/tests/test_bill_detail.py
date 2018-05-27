@@ -98,3 +98,24 @@ class BillDetailTestCase(SimpleTestCase):
         after = datetime(2017, 5, 24, 7, 00, 00)
         detail = BillDetail(now, after)
         self.assertEqual(detail.calculate_bill_charging_time(), 57600)
+
+    def test_get_total_time_call(self):
+        now = datetime(2017, 5, 23, 7, 00, 00)
+        after = datetime(2017, 5, 24, 7, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_time_call(), "24h00m00s")
+
+        now = datetime(2017, 5, 23, 7, 00, 00)
+        after = datetime(2017, 5, 23, 8, 00, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_time_call(), "1h00m00s")
+
+        now = datetime(2017, 5, 23, 7, 00, 00)
+        after = datetime(2017, 5, 23, 7, 10, 00)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_time_call(), "0h10m00s")
+
+        now = datetime(2017, 5, 23, 7, 00, 00)
+        after = datetime(2017, 5, 23, 7, 00, 30)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_total_time_call(), "0h00m30s")

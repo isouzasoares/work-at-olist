@@ -43,7 +43,7 @@ class BillDetail(object):
     def _get_total_seconds_charging_day(self):
         return self.end_interval_second - self.start_interval_second
 
-    def calculate_bill_charging_day(self, start_datetime, end_datetime):
+    def _calculate_bill_charging_day(self, start_datetime, end_datetime):
         total = 0
         start_time_seconds = self._get_interval_second(
             start_datetime.hour, start_datetime.minute,
@@ -83,10 +83,10 @@ class BillDetail(object):
             end_date_day = self.end_datetime.replace(
                 day=self.end_datetime.day, hour=0, minute=0, second=0)
 
-            second_start = self.calculate_bill_charging_day(
+            second_start = self._calculate_bill_charging_day(
                 self.start_datetime, start_date_day)
 
-            second_end = self.calculate_bill_charging_day(
+            second_end = self._calculate_bill_charging_day(
                 end_date_day, self.end_datetime)
 
             total = second_end + second_start
@@ -101,5 +101,13 @@ class BillDetail(object):
                     self.end_interval_second - self.start_interval_second)
             return total
         else:
-            return self.calculate_bill_charging_day(self.start_datetime,
-                                                    self.end_datetime)
+            return self._calculate_bill_charging_day(self.start_datetime,
+                                                     self.end_datetime)
+
+    def _second_to_hour(self, seconds):
+        mins, secs = divmod(seconds, 60)
+        hours, mins = divmod(mins, 60)
+        return '%dh%02dm%02ds' % (hours, mins, secs)
+
+    def get_total_time_call(self):
+        return self._second_to_hour(self.total_hour)
