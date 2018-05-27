@@ -113,6 +113,11 @@ class BillDetail(object):
     def get_total_time_call(self):
         return self._second_to_hour(self.total_hour)
 
+    def get_start_time(self):
+        return time(self.start_datetime.hour,
+                    self.start_datetime.minute,
+                    self.start_datetime.second)
+
     def get_total_price_call(self):
         total = Decimal(str(self.start_value))
         time_total = self.calculate_bill_charging_time() // 60

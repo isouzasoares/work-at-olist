@@ -1,5 +1,5 @@
 from decimal import Decimal
-from datetime import datetime
+from datetime import datetime, time
 
 from django.test import SimpleTestCase
 
@@ -158,3 +158,10 @@ class BillDetailTestCase(SimpleTestCase):
         detail = BillDetail(now, after)
         self.assertEqual(detail.get_total_price_call(),
                          Decimal('173.16'))
+
+    def test_get_start_time(self):
+        now = datetime(2017, 5, 23, 21, 0, 0)
+        after = datetime(2017, 5, 25, 21, 0, 0)
+        detail = BillDetail(now, after)
+        self.assertEqual(detail.get_start_time(),
+                         time(21, 0))
