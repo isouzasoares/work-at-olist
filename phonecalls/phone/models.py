@@ -6,7 +6,7 @@ from .choices import TYPE_CALL_CHOICES
 
 
 class Phone(models.Model):
-    number = models.CharField(max_length=9)
+    number = models.CharField(max_length=11)
 
 
 class Call(models.Model):
