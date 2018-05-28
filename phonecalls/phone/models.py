@@ -21,3 +21,6 @@ class CallDetail(models.Model):
     call_id = models.ForeignKey(Call, on_delete=models.PROTECT)
     type_call = models.CharField(max_length=10, choices=TYPE_CALL_CHOICES)
     timestamp = models.DateTimeField()
+
+    class Meta:
+        unique_together = ("call_id", "type_call")
