@@ -1,9 +1,12 @@
+from decimal import Decimal
+
 from django.test import TestCase
 from django.db import IntegrityError
 from django.utils import timezone
 
 from phone.models import Phone, Call, CallDetail
 from phone.choices import START, END
+from bill.utils import bill_create
 
 
 class CallModelTest(TestCase):
@@ -14,9 +17,21 @@ class CallModelTest(TestCase):
         Call.objects.create(source=phone,
                             destination=phone2,
                             call_id=70)
+        Call.objects.create(source=phone,
+                            destination=phone2,
+                            call_id=71)
+
+    def test_bill_call_create(self):
+        call = Call.objects.get(call_id=70)
+        start = timezone.datetime(2017, 5, 23, 21, 57, 13,
+                                  tzinfo=timezone.get_current_timezone())
+        end = timezone.datetime(2017, 5, 23, 22, 00, 00,
+                                tzinfo=timezone.get_current_timezone())
+        bill = bill_create(call, start, end)
+        self.assertEqual(bill.call_id, call)
 
     def test_call_detail_add(self):
-        call = Call.objects.get(call_id=70)
+        call = Call.objects.get(call_id=71)
         start = timezone.datetime(2017, 5, 23, 21, 57, 13,
                                   tzinfo=timezone.get_current_timezone())
         CallDetail.objects.create(call_id=call,
@@ -29,6 +44,8 @@ class CallModelTest(TestCase):
                                   type_call=END,
                                   timestamp=end)
         self.assertEqual(CallDetail.objects.count(), 2)
+        self.assertEqual(end.date(), call.billcall.call_start_date)
+        self.assertEqual(Decimal("0.54"), call.billcall.call_price)
 
         with self.assertRaises(IntegrityError):
             CallDetail.objects.create(call_id=call,

@@ -1,6 +1,8 @@
 from django.db import models
+from django.db.models.signals import post_save
 
-from .choices import TYPE_CALL_CHOICES
+from phone.choices import TYPE_CALL_CHOICES
+from bill.utils import bill_create
 
 # Create your models here.
 
@@ -24,3 +26,12 @@ class CallDetail(models.Model):
 
     class Meta:
         unique_together = ("call_id", "type_call")
+
+
+def save_price(sender, instance, **kwargs):
+    call_detail = instance.call_id.calldetail_set.all()
+    if call_detail.count() == 2:
+        start, end = call_detail
+        bill_create(instance.call_id, start.timestamp, end.timestamp)
+
+post_save.connect(save_price, sender=CallDetail)
