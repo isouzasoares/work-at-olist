@@ -5,7 +5,11 @@ from bill.api.serializers import BillCallSerializer
 
 
 class BillDetailList(ListAPIView):
-    lookup_field = "call_id__destination__number"
-    lookup_url_kwarg = "source_number"
     queryset = BillCall.objects.all()
     serializer_class = BillCallSerializer
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        qs = qs.filter(
+            call_id__source__number=self.kwargs["source_number"])
+        return qs

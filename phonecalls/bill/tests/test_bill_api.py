@@ -40,6 +40,17 @@ class BillDetailApiTestCase(TestCase):
                                                         minutes=10,
                                                         seconds=25),
                                 call_price=300.50)
+        call3 = Call.objects.create(source=phone2,
+                                    destination=phone,
+                                    call_id=72)
+
+        BillCall.objects.create(call_id=call3,
+                                call_start_date=date_test.date(),
+                                call_start_time=time(10, 15, 20),
+                                call_duration=timedelta(hours=35,
+                                                        minutes=10,
+                                                        seconds=25),
+                                call_price=300.50)
 
     def test_detail_url(self):
         with self.assertRaises(NoReverseMatch):
@@ -66,3 +77,7 @@ class BillDetailApiTestCase(TestCase):
 
         items = self.client.get(url).json()
         self.assertEqual(data, items)
+        url = reverse("bill:bill_detail_list", kwargs={"source_number":
+                                                       "31988888888"})
+        items = self.client.get(url).json()
+        self.assertEqual([], items)
