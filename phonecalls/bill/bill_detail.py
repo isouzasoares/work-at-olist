@@ -105,13 +105,8 @@ class BillDetail(object):
             return self._calculate_bill_charging_day(self.start_datetime,
                                                      self.end_datetime)
 
-    def _second_to_hour(self, seconds):
-        mins, secs = divmod(seconds, 60)
-        hours, mins = divmod(mins, 60)
-        return '%dh%02dm%02ds' % (hours, mins, secs)
-
     def get_total_time_call(self):
-        return self._second_to_hour(self.total_hour)
+        return self.total_time
 
     def get_start_time(self):
         return time(self.start_datetime.hour,
