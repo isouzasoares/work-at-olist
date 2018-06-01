@@ -36,13 +36,8 @@ class BillDetailList(ListAPIView):
                 call_id__calldetail__type_call=END,
                 call_id__calldetail__timestamp__month=month_year.month,
                 call_id__calldetail__timestamp__year=month_year.year)
-            page = self.paginate_queryset(queryset)
-
-            if page is not None:
-                serializer = self.get_serializer(page, many=True)
-                return self.get_paginated_response(serializer.data)
-
             serializer = self.get_serializer(queryset, many=True)
+
             return Response(serializer.data)
 
         return Response([])
