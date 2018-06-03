@@ -17,4 +17,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('api/bill/', include('bill.api.urls', namespace="bill-api")),
+    path('api/phone/', include('phone.api.urls', namespace="phone-api")),
 ]
