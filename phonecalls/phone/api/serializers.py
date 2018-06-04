@@ -4,6 +4,8 @@ from rest_framework import serializers
 from phone.models import CallDetail, Phone, Call
 from phone.choices import START, END, TYPE_CALL_CHOICES
 
+REGEX_NUMBER = r"^\d{10,11}"
+
 
 class CallDetailSerializer(serializers.Serializer):
     """Serialization for CallDetail.
@@ -25,10 +27,12 @@ class CallDetailSerializer(serializers.Serializer):
 
     """
     call_id = serializers.IntegerField()
-    source = serializers.CharField(min_length=10, max_length=11,
-                                   required=False)
-    destination = serializers.CharField(min_length=10, max_length=11,
-                                        required=False)
+    source = serializers.RegexField(REGEX_NUMBER,
+                                    min_length=10, max_length=11,
+                                    required=False)
+    destination = serializers.RegexField(REGEX_NUMBER,
+                                         min_length=10, max_length=11,
+                                         required=False)
     type_call = serializers.ChoiceField(choices=TYPE_CALL_CHOICES)
     timestamp = serializers.DateTimeField()
 
