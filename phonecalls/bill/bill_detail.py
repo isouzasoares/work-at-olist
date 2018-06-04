@@ -2,7 +2,10 @@ from decimal import Decimal
 from datetime import datetime, date, time
 
 
-class BillDetail(object):
+class BillDetail:
+    """The object identifies the intersection of the
+    collection intervals and calculates their due values
+    """
 
     def __init__(self, start_datetime, end_datetime,
                  start_value=0.36, call_value=0.09,
