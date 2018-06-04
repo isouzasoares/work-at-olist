@@ -6,6 +6,24 @@ from phone.choices import START, END, TYPE_CALL_CHOICES
 
 
 class CallDetailSerializer(serializers.Serializer):
+    """Serialization for CallDetail.
+
+    :param call_id: Call id pk.
+    :type call_id: int
+
+    :param source: number source call
+    :type source: str, min lenght 10, max_length 11
+
+    :param destination: number destination call
+    :type destination: str, min lenght 10, max_length 11
+
+    :param type_call: number destination call
+    :type type_call: str choices, start or end
+
+    :param timestamp: the datetime starts or ends call
+    :type timestamp: str
+
+    """
     call_id = serializers.IntegerField()
     source = serializers.CharField(min_length=10, max_length=11,
                                    required=False)
@@ -15,6 +33,11 @@ class CallDetailSerializer(serializers.Serializer):
     timestamp = serializers.DateTimeField()
 
     def validate(self, data):
+        """Returns the validated_data
+
+        :raises: ValidationError
+
+        """
         if data["type_call"] == END:
 
             try:
@@ -41,6 +64,16 @@ class CallDetailSerializer(serializers.Serializer):
         return data
 
     def create(self, validated_data):
+        """Create the Phone, Destination, Call and
+        CallDetail registry
+
+        .. note::
+            If type_call == 'start' the source and
+            destination is required.
+
+        :returns: dict, the validated_data
+
+        """
         call_id = validated_data.get("call_id")
         validated = validated_data.copy()
 

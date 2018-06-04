@@ -11,6 +11,11 @@ from phone.choices import END
 
 
 class BillDetailList(ListAPIView):
+    """
+       get:
+           return a list the bill detail
+
+    """
     queryset = BillCall.objects.all()
     serializer_class = BillCallSerializer
 

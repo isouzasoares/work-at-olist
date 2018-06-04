@@ -10,7 +10,7 @@ class BillDetail:
     def __init__(self, start_datetime, end_datetime,
                  start_value=0.36, call_value=0.09,
                  start_interval_hour=6, end_interval_hour=22):
-        """
+        """Initiates BillDetail
         :param start_datetime: The start datetime period
         :type start_datetime: datetime
 

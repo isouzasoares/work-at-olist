@@ -14,8 +14,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
+from rest_framework.documentation import include_docs_urls
 
 urlpatterns = [
     path('api/bill/', include('bill.api.urls', namespace="bill-api")),
     path('api/phone/', include('phone.api.urls', namespace="phone-api")),
+    path('api/docs/', include_docs_urls(title='Call API', public=True))
 ]

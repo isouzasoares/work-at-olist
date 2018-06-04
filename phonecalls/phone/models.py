@@ -29,6 +29,13 @@ class CallDetail(models.Model):
 
 
 def save_price(sender, instance, **kwargs):
+    """The function execute after
+    save registry in model CallDetail
+
+    .. note::
+            If call detail count == 2, the system calculate and
+            create billdetail values
+    """
     call_detail = instance.call_id.calldetail_set.all()
     if call_detail.count() == 2:
         start, end = call_detail

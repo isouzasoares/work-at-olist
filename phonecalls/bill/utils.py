@@ -3,6 +3,24 @@ from bill.bill_detail import BillDetail
 
 
 def bill_create(call_id, start, end):
+    """Get or create the BillDetail registry
+
+    :param call_id: call model object
+    :type call_id: call object
+
+    :param start: the end datetime period
+    :type currency: datetime
+
+    :param end: The value standing charge
+    :type: datetime
+
+    .. note::
+        The function calculate the call detail 'BillDetail'
+        and saves in model BillCall
+
+    :returns: billdetail object
+
+    """
     bill_detail_obj = getattr(call_id.call_id, "billcall", False)
     bill_detail = BillDetail(start, end)
 
