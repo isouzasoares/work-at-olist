@@ -14,10 +14,10 @@ class CallDetailSerializer(serializers.Serializer):
     :type call_id: int
 
     :param source: number source call
-    :type source: str, min lenght 10, max_length 11
+    :type source: str numbers, min lenght 10, max_length 11
 
     :param destination: number destination call
-    :type destination: str, min lenght 10, max_length 11
+    :type destination: str number, min lenght 10, max_length 11
 
     :param type_call: number destination call
     :type type_call: str choices, start or end
