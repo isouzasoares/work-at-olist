@@ -44,6 +44,8 @@ class BillDetailTestCase(TestCase):
                          79200.0 - 21600.0)
 
     def test_calculate_bill_charging_time(self):
+
+        # test all possibilities
         now = datetime(2017, 5, 23, 10, 00, 00)
         after = datetime(2017, 5, 23, 20, 00, 00)
         detail = BillDetail(now, after,

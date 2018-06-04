@@ -13,6 +13,8 @@ class PhoneCallApiTestCase(TestCase):
     client = APIRequestFactory()
 
     def test_post_calldetail(self):
+
+        # test inserts
         url = reverse("phone-api:call_add")
         data = {"call_id": 75,
                 "timestamp": "2018-05-01 21:57:13",
@@ -37,6 +39,8 @@ class PhoneCallApiTestCase(TestCase):
                          time(21, 57, 13))
 
     def test_call_post_validate_test(self):
+
+        # test errors
         url = reverse("phone-api:call_add")
         data = {"call_id": 75,
                 "timestamp": "2018-05-01 20:00:00",
