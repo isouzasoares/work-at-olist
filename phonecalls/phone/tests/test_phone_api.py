@@ -83,7 +83,7 @@ class PhoneCallApiTestCase(TestCase):
                  ['call_id does not exists. Please create call start']}
         self.assertEqual(request, error)
 
-        # test regex
+        # test phone regex
         data = {"call_id": 78,
                 "timestamp": "2018-05-02 22:00:00",
                 "type_call": START,
@@ -92,7 +92,7 @@ class PhoneCallApiTestCase(TestCase):
         request = self.client.post(url, data)
         self.assertEqual(request.status_code, 400)
 
-        # test regex
+        # test phone regex
         data = {"call_id": 78,
                 "timestamp": "2018-05-02 22:00:00",
                 "type_call": START,
