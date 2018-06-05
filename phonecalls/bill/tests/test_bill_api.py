@@ -77,23 +77,29 @@ class BillDetailApiTestCase(TestCase):
         before = now - relativedelta(months=1)
         url = reverse("bill:bill_detail_list", kwargs={"source_number":
                                                        "31985853903"})
-        data = [{'call_id': 70,
-                 'call_start_date': before.strftime("%Y-%m-%d"),
-                 'call_start_time': '22:00:00',
-                 'call_price': 'R$ 1,26',
-                 'call_duration': '0h10m00s'},
-                {'call_id': 71,
-                 'call_start_date': before.strftime("%Y-%m-%d"),
-                 'call_start_time': '10:15:20',
-                 'call_price': 'R$ 300,50',
-                 'call_duration': '35h10m25s'}]
+        phone = Phone.objects.get(number="31985853903")
+        data = {'id': phone.pk,
+                'number': '31985853903',
+                'period': before.strftime("%m/%Y"),
+                'call_records':
+                [{'call_id': 70,
+                  'call_start_date': before.strftime("%Y-%m-%d"),
+                  'call_start_time': '22:00:00',
+                  'call_price': 'R$ 1,26',
+                  'call_duration': '0h10m00s'},
+                 {'call_id': 71,
+                  'call_start_date': before.strftime("%Y-%m-%d"),
+                  'call_start_time': '10:15:20',
+                  'call_price': 'R$ 300,50',
+                  'call_duration': '35h10m25s'}]
+                }
 
         items = self.client.get(url).json()
         self.assertEqual(data, items)
         url = reverse("bill:bill_detail_list", kwargs={"source_number":
                                                        "31988888888"})
         items = self.client.get(url).json()
-        self.assertEqual([], items)
+        self.assertEqual({}, items)
 
     def test_filter_month_year_get(self):
         now = timezone.now().date()
@@ -105,21 +111,26 @@ class BillDetailApiTestCase(TestCase):
                                                        "31985853903"})
         get_url = "%s?month_year=%s" % (url, before_str)
         items = self.client.get(get_url).json()
-        data = [{'call_id': 70,
-                 'call_start_date': before.strftime("%Y-%m-%d"),
-                 'call_start_time': '22:00:00',
-                 'call_price': 'R$ 1,26',
-                 'call_duration': '0h10m00s'},
-                {'call_id': 71,
-                 'call_start_date': before.strftime("%Y-%m-%d"),
-                 'call_start_time': '10:15:20',
-                 'call_price': 'R$ 300,50',
-                 'call_duration': '35h10m25s'}]
+        phone = Phone.objects.get(number="31985853903")
+        data = {'id': phone.pk,
+                'number': '31985853903',
+                'period': before_str,
+                'call_records':
+                [{'call_id': 70,
+                  'call_start_date': before.strftime("%Y-%m-%d"),
+                  'call_start_time': '22:00:00',
+                  'call_price': 'R$ 1,26',
+                  'call_duration': '0h10m00s'},
+                 {'call_id': 71,
+                  'call_start_date': before.strftime("%Y-%m-%d"),
+                  'call_start_time': '10:15:20',
+                  'call_price': 'R$ 300,50',
+                  'call_duration': '35h10m25s'}]}
         self.assertEqual(data, items)
 
         get_url = "%s?month_year=%s" % (url, now_str)
         items = self.client.get(get_url).json()
-        self.assertEqual([], items)
+        self.assertEqual({}, items)
 
     def test_date_error(self):
         url = reverse("bill:bill_detail_list", kwargs={"source_number":

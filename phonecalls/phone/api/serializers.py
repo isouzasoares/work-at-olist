@@ -99,3 +99,10 @@ class CallDetailSerializer(serializers.Serializer):
         validated["call_id"] = call
         CallDetail.objects.create(**validated)
         return validated_data
+
+
+class PhoneSerializer(serializers. ModelSerializer):
+
+    class Meta:
+        model = Phone
+        fields = ("id", "number")

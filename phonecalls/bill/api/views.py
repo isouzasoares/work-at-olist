@@ -8,6 +8,8 @@ from rest_framework import status
 from bill.models import BillCall
 from bill.api.serializers import BillCallSerializer
 from phone.choices import END
+from phone.models import Phone
+from phone.api.serializers import PhoneSerializer
 
 
 class BillDetailList(ListAPIView):
@@ -36,6 +38,7 @@ class BillDetailList(ListAPIView):
 
         month_year = month_year.replace(day=1)
         if month_year < now:
+            data = {}
             queryset = queryset.filter(
                 call_id__source__number=kwargs["source_number"],
                 call_id__calldetail__type_call=END,
@@ -43,6 +46,12 @@ class BillDetailList(ListAPIView):
                 call_id__calldetail__timestamp__year=month_year.year)
             serializer = self.get_serializer(queryset, many=True)
 
-            return Response(serializer.data)
+            if serializer.data:
+                data = PhoneSerializer(Phone.objects.get(
+                    number=kwargs["source_number"])).data
+                data["period"] = month_year.strftime("%m/%Y")
+                data["call_records"] = serializer.data
 
-        return Response([])
+            return Response(data)
+
+        return Response({})
