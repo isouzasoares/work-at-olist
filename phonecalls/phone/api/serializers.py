@@ -47,10 +47,12 @@ class CallDetailSerializer(serializers.Serializer):
             try:
                 call = CallDetail.objects.get(call_id=data["call_id"],
                                               type_call=START)
+
                 if call.timestamp > data["timestamp"]:
                     raise serializers.ValidationError(
                         {"timestamp":
                          "Timestamp start call is > to timestamp"})
+
             except ObjectDoesNotExist:
                 raise serializers.ValidationError(
                     {"call_id":
@@ -75,7 +77,8 @@ class CallDetailSerializer(serializers.Serializer):
             If type_call == 'start' the source and
             destination is required.
 
-        :returns: dict, the validated_data
+        :returns: validated_data
+        :rtype: dict
 
         """
         call_id = validated_data.get("call_id")
@@ -101,7 +104,15 @@ class CallDetailSerializer(serializers.Serializer):
         return validated_data
 
 
-class PhoneSerializer(serializers. ModelSerializer):
+class PhoneSerializer(serializers.ModelSerializer):
+    """Serialization for Phone.
+
+    :param id: phone pk.
+    :type id: int auto_add
+
+    :param number: phone number.
+    :type str: min_length 10, max_length 11
+    """
 
     class Meta:
         model = Phone

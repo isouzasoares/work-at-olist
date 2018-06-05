@@ -56,7 +56,8 @@ class BillDetail:
         :param seconds: seconds for conversion
         :type: int
 
-        :returns: total seconds, float
+        :returns: total seconds
+        :rtype: float
         """
         timeobj = time(hour, minutes, seconds)
         seconds = datetime.combine(date.min, timeobj) - datetime.min
@@ -70,7 +71,8 @@ class BillDetail:
             The method not include start day and ends day, case total day is >
             1.
 
-        :returns: total days, int
+        :returns: total days
+        :rtype: int
         """
         total_day = (self.end_datetime - self.start_datetime).days
 
@@ -86,7 +88,8 @@ class BillDetail:
     def _get_total_seconds_charging_day(self):
         """Calculates total seconds for interval starts and end
 
-        :returns: total seconds, float
+        :returns: total seconds
+        :rtype: float
         """
         return self.end_interval_second - self.start_interval_second
 
@@ -103,7 +106,8 @@ class BillDetail:
         .. note::
             each one "if" represents a possibility of intersection
 
-        :return float
+        :return: total
+        :rtype: float
         """
         total = 0
         start_time_seconds = self._get_interval_second(
@@ -143,7 +147,8 @@ class BillDetail:
             for start day and ends day, multiply after the days complete with
             the intervals passed
 
-        :return float
+        :return: total
+        :rtype: float
         """
 
         if self._get_total_days_automatic_calculate():
@@ -177,14 +182,16 @@ class BillDetail:
     def get_total_time_call(self):
         """Returns total time for end_datetime - start_datetime
 
-        :return timedelta object
+        :return: total_time
+        :rtype: datetime.timedelta
         """
         return self.total_time
 
     def get_start_time(self):
         """Returns total starts hour, minutes and seconds
 
-        :return time object
+        :return: time
+        :rtype: datetime.time
         """
         return time(self.start_datetime.hour,
                     self.start_datetime.minute,
@@ -196,7 +203,8 @@ class BillDetail:
         .. note::
             The call price is start_value + total seconds interval * call_value
 
-        :return decimal object
+        :return: price
+        :rtype: decimal.Decimal
         """
         total = Decimal(str(self.start_value))
         time_total = self.calculate_bill_charging_time() // 60

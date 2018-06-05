@@ -15,13 +15,14 @@ def bill_create(call_id, start, end):
     :type currency: datetime
 
     :param end: The value standing charge
-    :type: datetime
+    :type end: datetime
 
     .. note::
         The function calculate the call detail 'BillDetail'
         and saves in model BillCall
 
-    :returns: billdetail object
+    :returns: bill detail registry
+    :rtype: bill_detail.BillDetail
 
     """
     bill_detail_obj = getattr(call_id.call_id, "billcall", False)
@@ -42,6 +43,22 @@ def bill_create(call_id, start, end):
 
 
 def get_month_year(month_year):
+    """Returns month date object
+
+    .. note::
+        The function converts str to date object, for
+        str format m/Y
+
+    :param month_year: The month_year format m/Y
+    :type month_year: str
+
+    :raises: ValueError
+
+    :returns: month_year_date
+    :rtype: datetime.date
+
+    """
+    month_year_date = None
     now = timezone.now().replace(day=1).date()
     if not month_year:
         month_year = now - relativedelta(months=1)
@@ -55,6 +72,6 @@ def get_month_year(month_year):
     month_year = month_year.replace(day=1)
 
     if month_year < now:
-        return month_year
+        month_year_date = month_year
 
-    return None
+    return month_year_date

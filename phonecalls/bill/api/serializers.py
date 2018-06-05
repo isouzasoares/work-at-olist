@@ -38,7 +38,8 @@ class BillCallSerializer(serializers.ModelSerializer):
         """Add mask to call_duration and
         return for serializer field call_duration
 
-        :returns: str, format 00h00m00s
+        :returns: total time format 00h00m00s
+        :rtype: str
         """
         seconds = obj.call_duration.total_seconds()
         mins, secs = divmod(seconds, 60)
@@ -49,13 +50,15 @@ class BillCallSerializer(serializers.ModelSerializer):
         """Replace . and add mask to call_price and
         return for serializer field call_price
 
-        :returns: str, format R$ 00,0
+        :returns: price format R$ 00,0
+        :rtype: str
         """
         return "R$ %s" % (str(obj.call_price).replace(".", ","))
 
 
 class MonthYearFilter(filters.FilterSet):
-    """Serialization for MonthYear.
+    """Serialization for MonthYear, django-filter
+       format
 
     :param month_year: month_year.
     :type month_year: str, format %d/%Y
