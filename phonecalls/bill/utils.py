@@ -1,3 +1,6 @@
+from dateutil.relativedelta import relativedelta
+from django.utils import timezone
+
 from bill.models import BillCall
 from bill.bill_detail import BillDetail
 
@@ -36,3 +39,22 @@ def bill_create(call_id, start, end):
     bill_obj.call_price = bill_detail.get_total_price_call()
     bill_obj.save()
     return bill_obj
+
+
+def get_month_year(month_year):
+    now = timezone.now().replace(day=1).date()
+    if not month_year:
+        month_year = now - relativedelta(months=1)
+    else:
+        try:
+            month_year = timezone.datetime.strptime(month_year, "%m/%Y")
+            month_year = month_year.date()
+        except:
+            raise ValueError
+
+    month_year = month_year.replace(day=1)
+
+    if month_year < now:
+        return month_year
+
+    return None

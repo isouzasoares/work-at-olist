@@ -1,5 +1,9 @@
 from rest_framework import serializers
+from django_filters import rest_framework as filters
+
+from phone.choices import END
 from bill.models import BillCall
+from bill.utils import get_month_year
 
 
 class BillCallSerializer(serializers.ModelSerializer):
@@ -48,3 +52,38 @@ class BillCallSerializer(serializers.ModelSerializer):
         :returns: str, format R$ 00,0
         """
         return "R$ %s" % (str(obj.call_price).replace(".", ","))
+
+
+class MonthYearFilter(filters.FilterSet):
+    """Serialization for MonthYear.
+
+    :param month_year: month_year.
+    :type month_year: str, format %d/%Y
+
+    """
+    month_year = filters.CharFilter()
+
+    class Meta:
+        model = BillCall
+        fields = ("month_year",)
+
+    @property
+    def qs(self):
+        """Returns django filter queryset.
+
+        """
+        month_year = self.data.get('month_year')
+        try:
+            month_year = get_month_year(month_year)
+        except ValueError:
+            raise ValueError
+
+        if month_year:
+            queryset = self.queryset.filter(
+                call_id__calldetail__type_call=END,
+                call_id__calldetail__timestamp__month=month_year.month,
+                call_id__calldetail__timestamp__year=month_year.year)
+        else:
+            queryset = self.queryset.none()
+
+        return queryset
