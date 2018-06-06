@@ -4,8 +4,6 @@ from django.db.models.signals import post_save
 from phone.choices import TYPE_CALL_CHOICES
 from bill.utils import bill_create
 
-# Create your models here.
-
 
 class Phone(models.Model):
     number = models.CharField(max_length=11)
@@ -40,5 +38,6 @@ def save_price(sender, instance, **kwargs):
     if call_detail.count() == 2:
         start, end = call_detail
         bill_create(instance.call_id, start.timestamp, end.timestamp)
+
 
 post_save.connect(save_price, sender=CallDetail)

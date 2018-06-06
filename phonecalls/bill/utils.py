@@ -66,7 +66,7 @@ def get_month_year(month_year):
         try:
             month_year = timezone.datetime.strptime(month_year, "%m/%Y")
             month_year = month_year.date()
-        except:
+        except ValueError:
             raise ValueError
 
     month_year = month_year.replace(day=1)
