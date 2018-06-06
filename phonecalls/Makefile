@@ -1,0 +1,16 @@
+default: test
+
+.PHONY: help
+help:
+	@echo "Please use \`make <target>' where <target> is one of"
+	@echo "  test    						to run tests using django unit test"
+	@echo "  run    						to run the project locally"
+
+.PHONY: test
+test:
+	python3.5 -m pytest
+
+.PHONY: run
+run:
+	DJANGO_SETTINGS_MODULE=project.settings PYTHONPATH=. python3.5 manage.py migrate
+	DJANGO_SETTINGS_MODULE=project.settings PYTHONPATH=. python3.5 manage.py runserver

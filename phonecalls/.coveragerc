@@ -1,0 +1,8 @@
+[run]
+omit = 
+  *migrations*
+  bill/tests/*
+  phone/tests/*
+  project/*
+  manage.py
+  *__init__.py*

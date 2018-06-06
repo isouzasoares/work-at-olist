@@ -1,6 +1,7 @@
 Django==2.0.5
 djangorestframework==3.8.2
 python-dateutil==2.7.3
+coreschema==0.0.4
 coreapi==2.3.3
 django-filter==1.1.0
-
+psycopg2==2.7.4
