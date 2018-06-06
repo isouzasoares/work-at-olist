@@ -1,6 +1,9 @@
 
 # Phone Call Project
 
+## Description
+
+
 
 ## Setup
 
@@ -16,6 +19,15 @@ The dependencies are split in production and development. Install the developmen
     python3.5 -m pip install -r requirements/development.txt
 
 This will install the production dependencies plus the development packages, such as *coverage* and *flake8* tools.
+
+
+### Configure .env file
+
+Create and configure .env file inside phonecalls path. Add the in .env file configuration, example:
+   
+   DEBUG=on
+   SECRET_KEY=8ag1(#)igb)6nw!idtly0ka#+i_@i=m)%83^60lns3kbq*$ko4
+   DATABASE_URL=psql://user:password@ip:port/databasename
 
 
 ### Testing
@@ -63,6 +75,7 @@ Libraries
     | coreapi                   | 2.3.3     |
     | django-filter             | 1.1.0     |
     | psycopg2                  | 2.7.4     |
+    | django-environ            | 0.4.4     |
     | pytest                    | 3.6.1     |
     | pytest-cov                | 2.5.1     |
     | pytest-django             | 3.1.2     |

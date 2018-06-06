@@ -11,19 +11,24 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
+import environ
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+env = environ.Env(DEBUG=(bool, False),)
+environ.Env.read_env('.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '8ag1(#)igb)6nw!idtly0ka#+i_@i=m)%83^60lns3kbq*$ko4'
+SECRET_KEY = env('SECRET_KEY',
+                 default="8ag1(#)igb)6nw!idtly0ka#+i_@i=m)%83^60lns3kbq*$ko4")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
@@ -77,15 +82,9 @@ WSGI_APPLICATION = 'project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'USER': os.environ.get('USER_DB', 'postgres'),
-        'NAME': os.environ.get('NAME_DB', 'callolist'),
-        'PASSWORD': os.environ.get('PASSWORD_DB', 'postgres'),
-        'HOST': os.environ.get('HOST_DB', '127.0.0.1'),
-        'PORT': os.environ.get('PORT_DB', '5432'),
-    },
+    'default': env.db(),
 }
 
 
