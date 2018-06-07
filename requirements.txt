@@ -6,3 +6,4 @@ coreapi==2.3.3
 django-filter==1.1.0
 psycopg2==2.7.4
 django-environ==0.4.4
+gunicorn==19.8.1
