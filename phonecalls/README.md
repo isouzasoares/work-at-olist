@@ -1,11 +1,13 @@
 
-# Phone Call Project
+# Phone Call API Project
 
 ## Description
 
+Phone Call API is a project based in python3.6, django framework and django_rest_framework.
+This project basically receive data of the call phone and returns the bill detail.
 
 
-## Setup
+### Setup
 
 This project runs over python **3.6** version.
 
@@ -26,7 +28,7 @@ This will install the requirements dependencies plus the development packages, s
 Create and configure .env file inside phonecalls path. Add the in .env file configuration, example:
    
     DEBUG=on
-    SECRET_KEY=abc
+    SECRET_KEY={your_key}
     DATABASE_URL=psql://user:password@ip:port/databasename
 
 
@@ -74,7 +76,7 @@ Libraries
     | python-dateutil           | 2.7.3     | 
     | coreapi                   | 2.3.3     |
     | django-filter             | 1.1.0     |
-    | psycopg2                  | 2.7.4     |
+    | psycopg2-binary           | 2.7.4     |
     | django-environ            | 0.4.4     |
     | gunicorn                  | 19.8.1    |
     | whitenoise                | 3.3.1     |
