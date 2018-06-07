@@ -57,9 +57,9 @@ This command invokes **migrate** followed by **runserver** django command.
 
 ### API Documentation
 
-For api documentation see:
+For api documentation see: [olist-test-icaro](https://olist-test-icaro.herokuapp.com/api/docs/)
 
-    http://localhost:8000/api/docs/ or [https://olist-test-icaro.herokuapp.com/api/docs/](https://olist-test-icaro.herokuapp.com/api/docs/)
+    http://localhost:8000/api/docs/ 
 
 
 ### Work environment
