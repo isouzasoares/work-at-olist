@@ -23,7 +23,7 @@ This section doesn't cover environment setup. Just make sure the **python3.6** c
 
 The dependencies are split in requirements and development. Install the development dependencies using the command:
 
-    python3.6 -m pip install -r requirements.txt
+    python3.6 -m pip install -r development.txt
 
 This will install the requirements dependencies plus the development packages, such as *pytest* tools.
 
