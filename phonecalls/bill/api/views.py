@@ -15,7 +15,10 @@ from phone.api.serializers import PhoneSerializer
 class BillDetailList(ListAPIView):
     """
         get:
-           return a list the bill detail
+            return a telephone bill the last closed period.
+            The month_year paramenter is not required and your format is m/Y.
+            It's only possible to get a telephone bill after
+            the reference period has ended.
 
     """
     queryset = BillCall.objects.all()
