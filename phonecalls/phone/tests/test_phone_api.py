@@ -38,6 +38,22 @@ class PhoneCallApiTestCase(TestCase):
         self.assertEqual(billcall.call_start_time,
                          time(21, 57, 13))
 
+        date = "2016-02-29T12:00:00Z"
+        data = {'call_id': 77,
+                'source': '99988526423',
+                'destination': '9993468278',
+                'type_call': 'start',
+                'timestamp': date}
+        request = self.client.post(url, data)
+        self.assertEqual(request.status_code, 201)
+
+        date = "2018-03-01T22:10:56Z"
+        data = {'call_id': 77,
+                'type_call': 'end',
+                'timestamp': date}
+        request = self.client.post(url, data)
+        self.assertEqual(request.status_code, 201)
+
     def test_call_post_validate_test(self):
 
         # test errors
@@ -68,6 +84,22 @@ class PhoneCallApiTestCase(TestCase):
         self.assertEqual(request.status_code, 201)
 
         data = {"call_id": 75,
+                "timestamp": "2018-05-02 22:00:00",
+                "type_call": END,
+                "source": "31985853903",
+                "destination": "3188888888"}
+        request = self.client.post(url, data)
+        self.assertEqual(request.status_code, 201)
+
+        data = {"call_id": 74,
+                "timestamp": "2018-05-02 22:00:00",
+                "type_call": START,
+                "source": "31985853903",
+                "destination": "3188888888"}
+        request = self.client.post(url, data)
+        self.assertEqual(request.status_code, 201)
+
+        data = {"call_id": 74,
                 "timestamp": "2018-05-01 21:00:00",
                 "type_call": END}
         request = self.client.post(url, data).json()
@@ -81,6 +113,16 @@ class PhoneCallApiTestCase(TestCase):
         request = self.client.post(url, data).json()
         error = {'call_id':
                  ['call_id does not exists. Please create call start']}
+        self.assertEqual(request, error)
+
+        data = {"call_id": 75,
+                "timestamp": "2018-05-02 22:00:00",
+                "type_call": START,
+                "source": "31985853903",
+                "destination": "3188888888"}
+        request = self.client.post(url, data).json()
+        error = {'call_id':
+                 ['call_id already exists for type_call']}
         self.assertEqual(request, error)
 
         # test phone regex

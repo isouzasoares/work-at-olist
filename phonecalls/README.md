@@ -14,11 +14,11 @@ This section doesn't cover environment setup. Just make sure the **python3.6** c
 
 ### Installing dependencies
 
-The dependencies are split in production and development. Install the development dependencies using the command:
+The dependencies are split in requirements and development. Install the development dependencies using the command:
 
     python3.6 -m pip install -r requirements.txt
 
-This will install the production dependencies plus the development packages, such as *coverage* and *flake8* tools.
+This will install the requirements dependencies plus the development packages, such as *pytest* tools.
 
 
 ### Configure .env file
@@ -52,7 +52,7 @@ This command invokes **migrate** followed by **runserver** django command.
 
 For api documentation see:
 
-    http://localhost:8000/api/docs/
+    http://localhost:8000/api/docs/ or [https://olist-test-icaro.herokuapp.com/api/docs/](https://olist-test-icaro.herokuapp.com/api/docs/)
 
 
 ### Work environment
@@ -76,6 +76,8 @@ Libraries
     | django-filter             | 1.1.0     |
     | psycopg2                  | 2.7.4     |
     | django-environ            | 0.4.4     |
+    | gunicorn                  | 19.8.1    |
+    | whitenoise                | 3.3.1     |
     | pytest                    | 3.6.1     |
     | pytest-cov                | 2.5.1     |
     | pytest-django             | 3.1.2     |

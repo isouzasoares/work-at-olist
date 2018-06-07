@@ -42,6 +42,12 @@ class CallDetailSerializer(serializers.Serializer):
         :raises: ValidationError
 
         """
+        call = CallDetail.objects.filter(call_id=data["call_id"],
+                                         type_call=data["type_call"])
+        if call:
+            raise serializers.ValidationError(
+                {"call_id": "call_id already exists for type_call"})
+
         if data["type_call"] == END:
 
             try:
@@ -83,10 +89,10 @@ class CallDetailSerializer(serializers.Serializer):
         """
         call_id = validated_data.get("call_id")
         validated = validated_data.copy()
+        source = validated.pop("source", "")
+        destination = validated.pop("destination", "")
 
         if validated_data.get("type_call") == START:
-            source = validated.pop("source")
-            destination = validated.pop("destination")
             source, created_source = Phone.objects.get_or_create(number=source)
             destination, created_destination = Phone.objects.get_or_create(
                 number=destination)

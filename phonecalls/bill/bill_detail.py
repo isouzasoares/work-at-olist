@@ -1,4 +1,5 @@
 from decimal import Decimal
+from dateutil.relativedelta import relativedelta
 from datetime import datetime, date, time
 
 
@@ -74,13 +75,15 @@ class BillDetail:
         :returns: total days
         :rtype: int
         """
+
         total_day = (self.end_datetime - self.start_datetime).days
 
         if total_day > 1:
             start_day = self.start_datetime.replace(
                 day=self.start_datetime.day, hour=23, minute=59, second=59)
-            end_day = self.end_datetime.replace(
-                day=self.end_datetime.day - 1, hour=23, minute=59, second=59)
+            end_date = self.end_datetime - relativedelta(days=1)
+            end_day = end_date.replace(
+                hour=23, minute=59, second=59)
             return (end_day - start_day).days
 
         return total_day
@@ -166,10 +169,10 @@ class BillDetail:
 
             total = second_end + second_start
 
+            end_date = self.end_datetime - relativedelta(days=1)
             date_validate = (
                 self.start_datetime.date() !=
-                self.end_datetime.replace(
-                    day=self.end_datetime.day - 1).date())
+                end_date.date())
 
             if date_validate:
                 total += self._get_total_days_automatic_calculate() * (

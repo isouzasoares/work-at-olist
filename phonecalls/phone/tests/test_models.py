@@ -1,4 +1,5 @@
 from decimal import Decimal
+from dateutil.relativedelta import relativedelta
 
 from django.test import TestCase
 from django.db import IntegrityError
@@ -6,7 +7,7 @@ from django.utils import timezone
 
 from phone.models import Phone, Call, CallDetail
 from phone.choices import START, END
-from bill.utils import bill_create
+from bill.utils import bill_create, get_month_year
 
 
 class CallModelTest(TestCase):
@@ -51,3 +52,14 @@ class CallModelTest(TestCase):
             CallDetail.objects.create(call_id=call,
                                       type_call=START,
                                       timestamp=end)
+
+    def test_util_month_year(self):
+        now = timezone.now()
+        month_year = now - relativedelta(months=1)
+        month_year = month_year.replace(day=1)
+        self.assertEqual(get_month_year(), month_year.date())
+
+        now = timezone.datetime(2018, 5, 1).date()
+        self.assertEqual(get_month_year("05/2018"), now)
+
+        self.assertRaises(ValueError, get_month_year, "05-2018")

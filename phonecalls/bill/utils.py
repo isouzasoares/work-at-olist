@@ -42,7 +42,7 @@ def bill_create(call_id, start, end):
     return bill_obj
 
 
-def get_month_year(month_year):
+def get_month_year(month_year=None):
     """Returns month date object
 
     .. note::
@@ -60,6 +60,7 @@ def get_month_year(month_year):
     """
     month_year_date = None
     now = timezone.now().replace(day=1).date()
+
     if not month_year:
         month_year = now - relativedelta(months=1)
     else:

@@ -8,9 +8,9 @@ help:
 
 .PHONY: test
 test:
-	python3.5 -m pytest
+	python3.6 -m pytest
 
 .PHONY: run
 run:
-	DJANGO_SETTINGS_MODULE=project.settings PYTHONPATH=. python3.5 manage.py migrate
-	DJANGO_SETTINGS_MODULE=project.settings PYTHONPATH=. python3.5 manage.py runserver
+	DJANGO_SETTINGS_MODULE=project.settings PYTHONPATH=. python3.6 manage.py migrate
+	DJANGO_SETTINGS_MODULE=project.settings PYTHONPATH=. python3.6 manage.py runserver
