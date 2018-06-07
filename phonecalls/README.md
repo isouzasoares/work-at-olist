@@ -16,7 +16,7 @@ This section doesn't cover environment setup. Just make sure the **python3.5** c
 
 The dependencies are split in production and development. Install the development dependencies using the command:
 
-    python3.5 -m pip install -r requirements/development.txt
+    python3.5 -m pip install -r requirements.txt
 
 This will install the production dependencies plus the development packages, such as *coverage* and *flake8* tools.
 
@@ -25,9 +25,9 @@ This will install the production dependencies plus the development packages, suc
 
 Create and configure .env file inside phonecalls path. Add the in .env file configuration, example:
    
-   DEBUG=on
-   SECRET_KEY=8ag1(#)igb)6nw!idtly0ka#+i_@i=m)%83^60lns3kbq*$ko4
-   DATABASE_URL=psql://user:password@ip:port/databasename
+    DEBUG=on
+    SECRET_KEY=abc
+    DATABASE_URL=psql://user:password@ip:port/databasename
 
 
 ### Testing
