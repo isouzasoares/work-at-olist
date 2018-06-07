@@ -24,13 +24,12 @@ environ.Env.read_env('.env')
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY',
-                 default="8ag1(#)igb)6nw!idtly0ka#+i_@i=m)%83^60lns3kbq*$ko4")
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['olist-test-icaro.herokuapp.com']
 
 
 # Application definition
