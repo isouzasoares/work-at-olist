@@ -7,16 +7,16 @@
 
 ## Setup
 
-This project runs over python **3.5** version.
+This project runs over python **3.6** version.
 
-This section doesn't cover environment setup. Just make sure the **python3.5** command is available on your path and the *dependencies are installed*.
+This section doesn't cover environment setup. Just make sure the **python3.6** command is available on your path and the *dependencies are installed*.
 
 
 ### Installing dependencies
 
 The dependencies are split in production and development. Install the development dependencies using the command:
 
-    python3.5 -m pip install -r requirements.txt
+    python3.6 -m pip install -r requirements.txt
 
 This will install the production dependencies plus the development packages, such as *coverage* and *flake8* tools.
 
