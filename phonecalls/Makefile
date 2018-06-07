@@ -3,7 +3,7 @@ default: test
 .PHONY: help
 help:
 	@echo "Please use \`make <target>' where <target> is one of"
-	@echo "  test    						to run tests using django unit test"
+	@echo "  test    						to run tests using pytest"
 	@echo "  run    						to run the project locally"
 
 .PHONY: test
