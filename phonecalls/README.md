@@ -37,23 +37,23 @@ Create and configure .env file inside phonecalls path. Add the in .env file conf
     DATABASE_URL=psql://user:password@ip:port/databasename
 
 
+**ATTENTION**: Make sure the dependencies are installed.
+
+### Running
+
+    cd phonecalls
+    make run
+
+This command invokes **migrate** followed by **runserver** django command.
+
+
 ### Testing
 
 You can execute the project tests available on **tests/** folder by invoking Makefile command *test*:
 
-    cd phonecalls
     make test
 
 This command invokes **pytest** to discover tests around the project working folder, execute them and show the code coverage.
-
-**ATTENTION**: Make sure the dependencies are installed.
-
-
-### Running
-
-    make run
-
-This command invokes **migrate** followed by **runserver** django command.
 
 
 ### API Documentation
