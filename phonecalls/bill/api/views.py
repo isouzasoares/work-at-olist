@@ -16,7 +16,7 @@ class BillDetailList(ListAPIView):
     """
         get:
             return a telephone bill the last closed period.
-            The month_year paramenter is not required and your format is m/Y.
+            The month_year parameter is not required and your format is m/Y.
             It's only possible to get a telephone bill after
             the reference period has ended.
 
