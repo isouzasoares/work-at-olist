@@ -14,6 +14,11 @@ This project runs over python **3.6** version.
 This section doesn't cover environment setup. Just make sure the **python3.6** command is available on your path and the *dependencies are installed*.
 
 
+### Cloning a repository
+
+    git clone https://github.com/isouzasoares/work-at-olist.git
+
+
 ### Installing dependencies
 
 The dependencies are split in requirements and development. Install the development dependencies using the command:
@@ -35,7 +40,7 @@ Create and configure .env file inside phonecalls path. Add the in .env file conf
 ### Testing
 
 You can execute the project tests available on **tests/** folder by invoking Makefile command *test*:
-
+    cd phonecalls
     make test
 
 This command invokes **pytest** to discover tests around the project working folder, execute them and show the code coverage.
