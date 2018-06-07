@@ -40,6 +40,7 @@ Create and configure .env file inside phonecalls path. Add the in .env file conf
 ### Testing
 
 You can execute the project tests available on **tests/** folder by invoking Makefile command *test*:
+
     cd phonecalls
     make test
 
